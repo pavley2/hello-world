@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'org.eclipse.che.examples'
+version = '1.0-SNAPSHOT'
+description = """hello-app"""
+
+sourceCompatibility = 1.5
+targetCompatibility = 1.5
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.eclipse.che.examples.Main'
+    }
+}
+
+repositories {
+    mavenCentral()                                                                        
+}                                                             
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version:'3.8.1'
+}
+
+task createPom {
+    description "Generates a pom.xml in the project root directory; useful e.g. for IDEs which can read POM but don't directly support Gradle."
+    doLast {
+        pom {
+        }.writeTo("pom.xml")
+    }
+}
+
+compileJava.dependsOn createPom
+
